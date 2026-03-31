@@ -107,6 +107,5 @@ def call_api():
 ## Development
 
 ```bash
-python -m pip install -e .[test]
-pytest -q
+make test
 ```
