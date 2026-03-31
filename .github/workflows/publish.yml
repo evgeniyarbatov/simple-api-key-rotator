@@ -15,25 +15,40 @@ jobs:
       name: pypi
       url: https://pypi.org/p/api-key-rotator-lang1234
     permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.12"
 
       - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install build
+          python -m pip install --upgrade build twine setuptools wheel
 
       - name: Run tests
         run: make test
 
       - name: Build package
         run: python -m build
+
+      - name: Check built distributions
+        run: python -m twine check dist/*
+
+      - name: Dump wheel metadata for debugging
+        run: |
+          python - <<'PY'
+          import glob, zipfile
+          wheels = glob.glob("dist/*.whl")
+          assert wheels, "No wheel found in dist/"
+          whl = wheels[0]
+          with zipfile.ZipFile(whl) as zf:
+              meta = [n for n in zf.namelist() if n.endswith("METADATA")][0]
+              print(zf.read(meta).decode("utf-8"))
+          PY
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
