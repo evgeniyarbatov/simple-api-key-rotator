@@ -11,7 +11,7 @@ Parameters:
 
 Raises `RuntimeError` when no keys are available.
 
-## `set_key(service, root=None)`
+## `set_key(service, root=None, cooldown_hours=24)`
 
 Rotates to the next eligible key and records the usage timestamp in `usage.json` (UTC ISO 8601).
 
@@ -19,6 +19,7 @@ Parameters:
 
 - `service` (str): service folder name.
 - `root` (Path | str | None): optional base directory. Defaults to `API_KEY_ROTATOR_ROOT` or the current working directory.
+- `cooldown_hours` (float): cooldown window in hours. Defaults to 24.
 
 Returns the selected key as a string. Raises `RuntimeError` when no keys are eligible.
 

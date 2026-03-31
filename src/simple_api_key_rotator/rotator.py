@@ -70,15 +70,22 @@ def get_key(service: str, root: Path | str | None = None) -> str:
     return keys[0]
 
 
-def set_key(service: str, root: Path | str | None = None) -> str:
+def set_key(
+    service: str,
+    root: Path | str | None = None,
+    cooldown_hours: float = 24,
+) -> str:
     keys_path, usage_path = service_paths(service, root=root)
     keys = load_keys(keys_path)
     usage = load_usage(usage_path)
+    if cooldown_hours < 0:
+        raise ValueError("cooldown_hours must be >= 0")
+
     now = datetime.now(timezone.utc)
-    cutoff = now - timedelta(hours=24)
+    cutoff = now - timedelta(hours=cooldown_hours)
 
     if not keys:
-        raise RuntimeError("No key is eligible based on the 24-hour rule")
+        raise RuntimeError("No key is eligible based on the cooldown rule")
 
     current = last_used_key(keys, usage)
     start_index = keys.index(current) + 1 if current in keys else 0
@@ -95,4 +102,4 @@ def set_key(service: str, root: Path | str | None = None) -> str:
             save_usage(usage_path, usage)
             return key
 
-    raise RuntimeError("No key is eligible based on the 24-hour rule")
+    raise RuntimeError("No key is eligible based on the cooldown rule")
