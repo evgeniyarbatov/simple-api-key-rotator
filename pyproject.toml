@@ -3,14 +3,14 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "example_pkg"
-version = "0.1.0"
-description = "A tiny example package you can publish to PyPI."
+name = "simple-api-key-rotator"
+version = "0.0.1"
+description = "Rotate API keys to bypass rate limits."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [
-  { name = "Your Name", email = "you@example.com" },
+  { name = "Evgeny Arbatov", email = "arbatovevgeny@gmail.com" },
 ]
 keywords = ["template", "example", "pypi"]
 classifiers = [
@@ -27,10 +27,10 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://example.com"
-Documentation = "https://example.com/docs"
-Repository = "https://example.com/repo"
-Issues = "https://example.com/issues"
+Homepage = "https://github.com/evgeniyarbatov/simple-api-key-rotator"
+Documentation = "https://github.com/evgeniyarbatov/simple-api-key-rotator"
+Repository = "https://github.com/evgeniyarbatov/simple-api-key-rotator"
+Issues = "https://github.com/evgeniyarbatov/simple-api-key-rotator/issues"
 
 [project.optional-dependencies]
 dev = [
