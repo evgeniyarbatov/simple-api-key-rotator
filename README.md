@@ -101,8 +101,6 @@ def call_api():
 ## Documentation
 
 - `docs/README.md`
-- `docs/usage.md`
-- `docs/api.md`
 
 ## Development
 
