@@ -1,0 +1,12 @@
+site_name: Example Package
+site_description: Documentation for the example PyPI package template.
+repo_url: https://example.com/repo
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.top
+
+nav:
+  - Home: index.md
