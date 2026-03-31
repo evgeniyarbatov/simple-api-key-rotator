@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/api-key-rotator-lang1234
+      url: https://pypi.org/p/simple-api-key-rotator/
     permissions:
       id-token: write
     steps:
