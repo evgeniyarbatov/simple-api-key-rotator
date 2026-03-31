@@ -1,47 +1,32 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=67", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "simple-api-key-rotator"
-version = "0.0.1"
-description = "Rotate API keys to bypass rate limits."
+version = "0.1.0"
+description = "Rotate API keys using a 24-hour cooldown rule."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
-authors = [
-  { name = "Evgeny Arbatov", email = "arbatovevgeny@gmail.com" },
-]
-keywords = ["template", "example", "pypi"]
+keywords = ["api", "keys", "rotation", "secrets"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
 ]
+
 dependencies = []
 
-[project.urls]
-Homepage = "https://github.com/evgeniyarbatov/simple-api-key-rotator"
-Documentation = "https://github.com/evgeniyarbatov/simple-api-key-rotator"
-Repository = "https://github.com/evgeniyarbatov/simple-api-key-rotator"
-Issues = "https://github.com/evgeniyarbatov/simple-api-key-rotator/issues"
-
 [project.optional-dependencies]
-dev = [
-  "build>=1.0",
-  "mkdocs>=1.6",
-  "mkdocs-material>=9.5",
-  "mypy>=1.8",
-  "pytest>=7.4",
-  "pytest-cov>=4.1",
-  "ruff>=0.4",
-  "twine>=5.0",
+test = [
+  "pytest>=7.4"
 ]
 
 [tool.setuptools]
@@ -49,26 +34,3 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[tool.setuptools.package-data]
-example_pkg = ["py.typed"]
-
-[tool.pytest.ini_options]
-minversion = "7.0"
-addopts = "-ra -q --cov=example_pkg --cov-report=term-missing"
-testpaths = ["tests"]
-
-[tool.ruff]
-line-length = 100
-target-version = "py39"
-
-[tool.ruff.lint]
-select = ["B", "E", "F", "I", "UP"]
-ignore = ["E203", "E266", "E501"]
-
-[tool.mypy]
-python_version = "3.9"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-ignore_missing_imports = true
