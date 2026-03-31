@@ -113,3 +113,27 @@ def test_set_key_errors_when_no_eligible(tmp_path: Path) -> None:
 
     with pytest.raises(RuntimeError, match="No key is eligible"):
         set_key("service", root=tmp_path)
+
+
+def test_set_key_allows_custom_cooldown(tmp_path: Path) -> None:
+    service_dir = tmp_path / "service"
+    service_dir.mkdir()
+    write_keys(service_dir / "keys.txt", ["a", "b"])
+
+    now = datetime.now(timezone.utc)
+    usage = {
+        "a": (now - timedelta(hours=3)).isoformat(),
+    }
+    write_usage(service_dir / "usage.json", usage)
+
+    chosen = set_key("service", root=tmp_path, cooldown_hours=2)
+    assert chosen == "a"
+
+
+def test_set_key_rejects_negative_cooldown(tmp_path: Path) -> None:
+    service_dir = tmp_path / "service"
+    service_dir.mkdir()
+    write_keys(service_dir / "keys.txt", ["a"])
+
+    with pytest.raises(ValueError, match="cooldown_hours"):
+        set_key("service", root=tmp_path, cooldown_hours=-1)

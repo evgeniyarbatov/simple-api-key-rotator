@@ -1,6 +1,6 @@
 # Simple API Key Rotator
 
-Rotate API keys using a 24-hour cooldown rule. Keys are stored in a text file and usage is tracked in a JSON file per service.
+Rotate API keys using a cooldown rule (default 24 hours). Keys are stored in a text file and usage is tracked in a JSON file per service.
 
 ## Installation
 
@@ -57,13 +57,46 @@ If both are provided, the explicit `root=` argument wins.
 A key is eligible when:
 
 - It has never been used, or
-- It was last used more than 24 hours ago.
+- It was last used more than 24 hours ago (by default).
 
 When rotating, the algorithm starts from the key after the most recently used key and wraps around in order.
+
+You can override the cooldown window:
+
+```python
+from simple_api_key_rotator import set_key
+
+next_key = set_key("my-service", cooldown_hours=6)
+```
 
 ## Error cases
 
 `get_key` and `set_key` raise `RuntimeError` when no key is eligible or `keys.txt` is empty.
+
+## Example: rotate on API exceptions
+
+Rotate the key when an API returns a rate-limit response, then retry or exit.
+
+```python
+import requests
+
+from simple_api_key_rotator import get_key, set_key
+
+
+def call_api():
+    api_key = get_key("my-service")
+    response = requests.get(
+        "https://api.example.com/endpoint",
+        params={"q": "example", "key": api_key},
+    )
+
+    if response.status_code == 429:
+        set_key("my-service")
+        raise RuntimeError("Rate limited. Rotated key; retry later.")
+
+    response.raise_for_status()
+    return response.json()
+```
 
 ## Documentation
 
