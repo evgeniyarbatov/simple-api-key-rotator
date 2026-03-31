@@ -29,5 +29,9 @@ test = [
   "pytest>=7.4"
 ]
 
+[project.urls]
+Repository = "https://github.com/evgeniyarbatov/simple-api-key-rotator"
+Issues = "https://github.com/evgeniyarbatov/simple-api-key-rotator/issues"
+
 [tool.setuptools.packages.find]
 where = ["."]
