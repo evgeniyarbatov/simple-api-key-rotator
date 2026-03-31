@@ -65,7 +65,7 @@ next_key = set_key("my-service", cooldown_hours=6)
 
 ## Example: rotate on 429 responses
 
-Based on the pattern in `/Users/zhenya/gitRepo/marathoner-books/scripts/books.py`, rotate the key when the API returns a rate-limit error.
+Rotate the key when the API returns a rate-limit error.
 
 ```python
 import requests
@@ -74,14 +74,14 @@ from simple_api_key_rotator import get_key, set_key
 
 
 def call_api():
-    api_key = get_key("google-books")
+    api_key = get_key("my-service")
     response = requests.get(
-        "https://www.googleapis.com/books/v1/volumes",
-        params={"q": "runner", "key": api_key},
+        "https://api.example.com/endpoint",
+        params={"q": "example", "key": api_key},
     )
 
     if response.status_code == 429:
-        set_key("google-books")
+        set_key("my-service")
         raise RuntimeError("Rate limited. Rotated key; retry later.")
 
     response.raise_for_status()
