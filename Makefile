@@ -1,5 +1,6 @@
 .PHONY: test
 
 test:
-	python -m pip install -e .[test]
-	pytest -q
+		python3 -m venv .venv
+		. .venv/bin/activate && python -m pip install -e .[test]
+		. .venv/bin/activate && pytest -q
