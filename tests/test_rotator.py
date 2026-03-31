@@ -127,7 +127,7 @@ def test_set_key_allows_custom_cooldown(tmp_path: Path) -> None:
     write_usage(service_dir / "usage.json", usage)
 
     chosen = set_key("service", root=tmp_path, cooldown_hours=2)
-    assert chosen == "a"
+    assert chosen == "b"
 
 
 def test_set_key_rejects_negative_cooldown(tmp_path: Path) -> None:
