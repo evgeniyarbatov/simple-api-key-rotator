@@ -35,7 +35,8 @@ def load_usage(usage_path: Path) -> dict[str, str]:
     content = usage_path.read_text().strip()
     if not content:
         return {}
-    return json.loads(content)
+    data: dict[str, str] = json.loads(content)
+    return data
 
 
 def save_usage(usage_path: Path, usage: dict[str, str]) -> None:

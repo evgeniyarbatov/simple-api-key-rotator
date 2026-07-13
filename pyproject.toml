@@ -26,7 +26,8 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-  "pytest>=7.4"
+  "mypy>=1.19.1",
+  "pytest>=7.4",
 ]
 
 [project.urls]
