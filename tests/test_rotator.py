@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -25,14 +25,16 @@ def write_usage(path: Path, usage: dict[str, str]) -> None:
 
 def test_load_keys_ignores_comments_and_blank_lines(tmp_path: Path) -> None:
     keys_path = tmp_path / "keys.txt"
-    keys_path.write_text("""
+    keys_path.write_text(
+        """
 
 # comment
 key-a
-  
+
 key-b
 # another
-""".strip())
+""".strip()
+    )
 
     assert load_keys(keys_path) == ["key-a", "key-b"]
 
@@ -84,7 +86,7 @@ def test_set_key_rotates_to_next_eligible(tmp_path: Path) -> None:
     service_dir.mkdir()
     write_keys(service_dir / "keys.txt", ["a", "b", "c"])
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     usage = {
         "a": (now - timedelta(hours=1)).isoformat(),
         "b": (now - timedelta(hours=25)).isoformat(),
@@ -104,7 +106,7 @@ def test_set_key_errors_when_no_eligible(tmp_path: Path) -> None:
     service_dir.mkdir()
     write_keys(service_dir / "keys.txt", ["a", "b"])
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     usage = {
         "a": (now - timedelta(hours=1)).isoformat(),
         "b": (now - timedelta(hours=2)).isoformat(),
@@ -120,7 +122,7 @@ def test_set_key_allows_custom_cooldown(tmp_path: Path) -> None:
     service_dir.mkdir()
     write_keys(service_dir / "keys.txt", ["a", "b"])
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     usage = {
         "a": (now - timedelta(hours=3)).isoformat(),
     }

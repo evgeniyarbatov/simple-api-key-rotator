@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import os
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 DEFAULT_ROOT_ENV = "API_KEY_ROTATOR_ROOT"
@@ -81,7 +81,7 @@ def set_key(
     if cooldown_hours < 0:
         raise ValueError("cooldown_hours must be >= 0")
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     cutoff = now - timedelta(hours=cooldown_hours)
 
     if not keys:
