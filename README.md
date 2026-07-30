@@ -105,5 +105,7 @@ def call_api():
 ## Development
 
 ```bash
-make test
+make run
 ```
+
+This is a library with no CLI; `make run` runs the test suite (alias for `make test`).
